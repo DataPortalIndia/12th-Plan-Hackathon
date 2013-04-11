@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% macro write_group(group) %}
+
+<div class="row">
+	<div class="span6">
+	<a href="index.py?page=group&group={{ group }}" style="text-decoration: none;">
+		<h4 style="color: #{{ groups[group]['color'] }};">
+		<i class="icon {{ groups[group]['icon'] }}"></i> {{ groups[group]["label"] }}</h4>
+	</a>
+	<p style="font-size: 80%"><b>Keywords: </b>{{ ", ".join(groups[group]["keywords"]) }}</p>
+	</div>
+	<div class="span6">
+		<div class="progress">
+			<div class="bar" style="width: {{ groups[group]['sets'] * 100 / maxsets }}%;"></div>
+		</div>
+		<p style="font-size: 80%">{{ int(groups[group]['sets']) }} datasets.
+			<a href="index.py?page=group&group={{ group }}" 
+			>Show me.</a></p>
+	</div>
+</div>
+{% endmacro %}
+
+{% block content %}
+
+{% include "header.html" %}
+
+<br />
+<h2 style="text-align: center;">Explore Government of India Datasets</h2>
+<br />
+{% for group in group_list if group!="Other" -%}
+	{{ write_group(group) }}
+	<hr>
+{%- endfor %}
+{{ write_group("Other") }}
+
+<div style="text-align: center;">
+	<br /><br /><br />
+	<a class="btn btn-info" href="index.py?page=about">Tell me more</a>
+	<br /><br /><br />
+</div>
+
+{% endblock %}

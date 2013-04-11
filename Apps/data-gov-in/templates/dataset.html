@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="background-color: #{{ group_info['color'] }}; height: 18px;">
+</div>
+
+<div class="row">
+	<div class="span12">
+		<ul class="breadcrumb">
+			<li><a href="index.py">Home</a> <span class="divider">/</span></li>
+			<li><a href="index.py?page=group&group={{ group }}">
+				<i class="icon {{ group_info['icon'] }}"></i> {{ group_info["label"] }}</a> 
+				<span class="divider">/</span>
+			</li>
+			<li class="active">Dataset</li>
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span12">
+		<h3>{{ properties.title }}</h3>
+		<p style="color: #777; font-size: 80%">{{ properties.description }}</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span12" style="overflow-x: scroll;">
+		{% if file_data -%}
+		<canvas id="canvas" height="300" width="940"></canvas>
+		<table class="table table-bordered table-striped" style="font-size: 80%">
+			<tbody>
+				{% for row in file_data -%}
+				<tr>
+					{% for col in row -%}
+					<td>{{ col }}</td>
+					{%- endfor %}
+				</tr>
+				{%- endfor %}
+			</tbody>
+		</table>
+		{%- endif %}
+	</div>
+</div>
+
+<script>
+	var ctx = $("#canvas").get(0).getContext("2d")
+
+	if({{ chart_data }}["chart_type"] == "Line") {
+		new Chart(ctx).Line({{ chart_data }});
+	}
+	else if({{ chart_data}}["chart_type"]  == "Pie") {
+		new Chart(ctx).Pie({{ chart_data }}["datasets"]);
+	}
+</script>
+
+{% endblock %}
