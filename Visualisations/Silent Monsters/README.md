@@ -8,4 +8,4 @@
 
 **Hackathon Location:** IIT Delhi
 
-**Prize Own**: Third prize under visualisation category
+**Prize Own**: Consolation prize under visualisation category
